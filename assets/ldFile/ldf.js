@@ -9,7 +9,8 @@ ldFile = function(opt){
     root: root = typeof opt.root === 'string'
       ? document.querySelector(opt.root)
       : opt.root,
-    type: opt.type || 'binary'
+    type: opt.type || 'binary',
+    ldcv: opt.ldcv || null
   });
   loadFile = function(f){
     return new Promise(function(res, rej){
