@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+mkdir -p dist
+echo "build src/ldf.ls -> dist/ldf.js ..."
+./node_modules/.bin/lsc -cbp src/ldf.ls > dist/ldf.js
+echo "minifying ldf.js ..."
+./node_modules/.bin/uglifyjs dist/ldf.js > dist/ldf.min.js
+echo "deploy to demo folder..."
+mkdir -p demo/static/assets/ldFile/
+cp dist/ldf.* demo/static/assets/ldFile/
+echo "done."
