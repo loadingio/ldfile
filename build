@@ -6,5 +6,7 @@ echo "minifying ldf.js ..."
 ./node_modules/.bin/uglifyjs dist/ldf.js > dist/ldf.min.js
 echo "deploy to demo folder..."
 mkdir -p demo/static/assets/ldFile/
+mkdir -p demo/static/assets/ldCover/
 cp dist/ldf.* demo/static/assets/ldFile/
+cp node_modules/ldCover/dist/* demo/static/assets/ldCover/
 echo "done."

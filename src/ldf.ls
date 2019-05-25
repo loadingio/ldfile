@@ -4,6 +4,7 @@ ldFile = (opt = {}) ->
     opt: opt
     root: root = if typeof(opt.root) == \string => document.querySelector(opt.root) else opt.root
     type: opt.type or \binary # valid type: <[dataurl text binary arraybuffer blob bloburl]>
+    ldcv: opt.ldcv or null
   load-file = (f) ~> new Promise (res, rej) ~>
     fr = new FileReader!
     fr.onload = -> res {result: fr.result, file: f}

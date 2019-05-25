@@ -1,7 +1,17 @@
 doctype html
 html
   head
+    link(rel="stylesheet",href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css")
+    link(rel="stylesheet",type="text/css",href="assets/ldCover/ldcv.min.css")
   body
-    input(type="file")
-    script(src="/assets/ldFile/ldf.js")
-    script(src="/js/index.js")
+    .m-4
+      input.mb-4(type="file")
+      .ldcv: .base: .inner.card: .card-body
+        .btn.btn-outline-dark.m-2(data-ldcv-set="utf-8") UTF-8
+        .btn.btn-outline-dark.m-2(data-ldcv-set="big5") BIG5
+        .btn.btn-outline-dark.m-2(data-ldcv-set="gb2312") GB2312
+      textarea#textarea.form-control(rows="10",placeholder="output")
+
+    script(src="assets/ldFile/ldf.min.js")
+    script(src="assets/ldCover/ldcv.min.js")
+    script(src="js/index.js")
