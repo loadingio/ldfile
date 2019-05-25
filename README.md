@@ -1,8 +1,0 @@
-# ldFile
-
-TBD
-
-
-## License
-
-MIT
