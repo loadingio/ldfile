@@ -2,7 +2,7 @@
 var slice$ = [].slice;
 (function(){
   var loadFile, ldFile, this$ = this;
-  loadFile = function(f){
+  loadFile = function(f, t){
     return new Promise(function(res, rej){
       var fr;
       fr = new FileReader();
@@ -12,20 +12,20 @@ var slice$ = [].slice;
           file: f
         });
       };
-      if (this$.type === 'dataurl') {
+      if (t === 'dataurl') {
         return fr.readAsDataURL(f);
-      } else if (this$.type === 'text') {
+      } else if (t === 'text') {
         return fr.readAsText(f, this$.encoding || 'utf-8');
-      } else if (this$.type === 'binary') {
+      } else if (t === 'binary') {
         return fr.readAsBinaryString(f);
-      } else if (this$.type === 'arraybuffer' || this$.type === 'blob') {
+      } else if (t === 'arraybuffer' || t === 'blob') {
         return fr.readAsArrayBuffer(f);
-      } else if (this$.type === 'blob') {
+      } else if (t === 'blob') {
         return res(f);
-      } else if (this$.type === 'bloburl') {
+      } else if (t === 'bloburl') {
         return res(URL.createObjectURL(f));
       } else {
-        return rej(new Error("ldFile: un-supported ytpe"));
+        return rej(new Error("ldFile: un-supported type"));
       }
     });
   };
@@ -62,7 +62,7 @@ var slice$ = [].slice;
         : Promise.resolve();
       return promise.then(function(){
         return Promise.all(Array.from(files).map(function(f){
-          return loadFile.call(this, f);
+          return loadFile(f, type);
         }));
       }).then(function(it){
         return this$.fire('load', it);
@@ -83,6 +83,21 @@ var slice$ = [].slice;
         results$.push(cb.apply(this, v));
       }
       return results$;
+    }
+  });
+  import$(ldFile, {
+    url: function(u, t){
+      t == null && (t = 'dataurl');
+      return new Promise(function(res, rej){
+        var r;
+        r = new XMLHttpRequest();
+        r.open('GET', u, true);
+        r.responseType = 'blob';
+        r.onload = function(){
+          return loadFile(r.response, t).then(res)['catch'](rej);
+        };
+        return r.send();
+      });
     }
   });
   if (typeof module != 'undefined' && module !== null) {

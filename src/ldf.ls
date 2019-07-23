@@ -1,14 +1,14 @@
 (->
-  load-file = (f) ~> new Promise (res, rej) ~>
+  load-file = (f, t) ~> new Promise (res, rej) ~>
     fr = new FileReader!
     fr.onload = -> res {result: fr.result, file: f}
-    if @type == \dataurl => fr.readAsDataURL f
-    else if @type == \text => fr.readAsText f, (@encoding or \utf-8)
-    else if @type == \binary => fr.readAsBinaryString f
-    else if @type == \arraybuffer or @type == \blob => fr.readAsArrayBuffer f
-    else if @type == \blob => res f
-    else if @type == \bloburl => res URL.createObjectURL f
-    else rej new Error("ldFile: un-supported ytpe")
+    if t == \dataurl => fr.readAsDataURL f
+    else if t == \text => fr.readAsText f, (@encoding or \utf-8)
+    else if t == \binary => fr.readAsBinaryString f
+    else if t == \arraybuffer or t == \blob => fr.readAsArrayBuffer f
+    else if t == \blob => res f
+    else if t == \bloburl => res URL.createObjectURL f
+    else rej new Error("ldFile: un-supported type")
 
   ldFile = (opt = {}) ->
     @ <<< do
@@ -26,13 +26,22 @@
       promise = if @type == \text => (if @ldcv => @ldcv.get! else from-prompt!).then ~> @encoding = it
       else Promise.resolve!
       promise
-        .then ~> Promise.all(Array.from(files).map (f) -> load-file.call @, f)
+        .then ~> Promise.all(Array.from(files).map (f) -> load-file f, type)
         .then ~> @fire \load, it
     @
 
   ldFile.prototype = Object.create(Object.prototype) <<< do
     on: (n, cb) -> @evt-handler.[][n].push cb
     fire: (n, ...v) -> for cb in (@evt-handler[n] or []) => cb.apply @, v
+
+  ldFile <<< do
+    url: (u, t = \dataurl) ->
+      new Promise (res, rej) ->
+        r = new XMLHttpRequest!
+        r.open \GET, u, true
+        r.responseType = \blob
+        r.onload = -> load-file(r.response, t) .then(res).catch(rej)
+        r.send!
 
   if module? => module.exports = ldFile
   if window => window.ldFile = ldFile

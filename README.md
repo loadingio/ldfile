@@ -28,6 +28,13 @@ file loader helper in vanilla JS.
      - file: the file object provided by browser.
      - result: file content parsed by ldFile.
 
+## API
+
+ * ldFile.url(url, type) - load file by URL.
+   - type is the same as the type in ldFile object configuration.
+   - return a promise
+   - resolve a {result, file} object.
+
 
 ## Compatibility
 
