@@ -1,9 +1,9 @@
 (->
-  load-file = (f, t) ~> new Promise (res, rej) ~>
+  load-file = (f, t = \dataurl, e) ~> new Promise (res, rej) ~>
     fr = new FileReader!
     fr.onload = -> res {result: fr.result, file: f}
     if t == \dataurl => fr.readAsDataURL f
-    else if t == \text => fr.readAsText f, (@encoding or \utf-8)
+    else if t == \text => fr.readAsText f, (e or \utf-8)
     else if t == \binary => fr.readAsBinaryString f
     else if t == \arraybuffer or t == \blob => fr.readAsArrayBuffer f
     else if t == \blob => res f
@@ -26,7 +26,7 @@
       promise = if @type == \text => (if @ldcv => @ldcv.get! else from-prompt!).then ~> @encoding = it
       else Promise.resolve!
       promise
-        .then ~> Promise.all(Array.from(files).map (f) ~> load-file f, @type)
+        .then ~> Promise.all(Array.from(files).map (f) ~> load-file f, @type, @encoding)
         .then ~> @fire \load, it
     @
 
@@ -35,13 +35,14 @@
     fire: (n, ...v) -> for cb in (@evt-handler[n] or []) => cb.apply @, v
 
   ldFile <<< do
-    url: (u, t = \dataurl) ->
+    fromURL: (u, t, e) ->
       new Promise (res, rej) ->
         r = new XMLHttpRequest!
         r.open \GET, u, true
         r.responseType = \blob
         r.onload = -> load-file(r.response, t) .then(res).catch(rej)
         r.send!
+    fromFile: (f, t, e) -> load-file f, t, e
 
   if module? => module.exports = ldFile
   if window => window.ldFile = ldFile

@@ -2,7 +2,8 @@
 var slice$ = [].slice;
 (function(){
   var loadFile, ldFile, this$ = this;
-  loadFile = function(f, t){
+  loadFile = function(f, t, e){
+    t == null && (t = 'dataurl');
     return new Promise(function(res, rej){
       var fr;
       fr = new FileReader();
@@ -15,7 +16,7 @@ var slice$ = [].slice;
       if (t === 'dataurl') {
         return fr.readAsDataURL(f);
       } else if (t === 'text') {
-        return fr.readAsText(f, this$.encoding || 'utf-8');
+        return fr.readAsText(f, e || 'utf-8');
       } else if (t === 'binary') {
         return fr.readAsBinaryString(f);
       } else if (t === 'arraybuffer' || t === 'blob') {
@@ -62,7 +63,7 @@ var slice$ = [].slice;
         : Promise.resolve();
       return promise.then(function(){
         return Promise.all(Array.from(files).map(function(f){
-          return loadFile(f, this$.type);
+          return loadFile(f, this$.type, this$.encoding);
         }));
       }).then(function(it){
         return this$.fire('load', it);
@@ -86,8 +87,7 @@ var slice$ = [].slice;
     }
   });
   import$(ldFile, {
-    url: function(u, t){
-      t == null && (t = 'dataurl');
+    fromURL: function(u, t, e){
       return new Promise(function(res, rej){
         var r;
         r = new XMLHttpRequest();
@@ -98,6 +98,9 @@ var slice$ = [].slice;
         };
         return r.send();
       });
+    },
+    fromFile: function(f, t, e){
+      return loadFile(f, t, e);
     }
   });
   if (typeof module != 'undefined' && module !== null) {

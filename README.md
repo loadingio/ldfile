@@ -30,11 +30,13 @@ file loader helper in vanilla JS.
 
 ## API
 
- * ldFile.url(url, type) - load file by URL.
+ * ldFile.fromURL(url, type, encoding) - load file by URL.
    - type is the same as the type in ldFile object configuration.
+   - encoding is default utf-8 and only applicable when type is text.
    - return a promise
    - resolve a {result, file} object.
-
+ * ldFile.fromFile(file, type, encoding) - load File object
+   - same with ldFile.fromURL except that the first param (file) is a File object.
 
 ## Compatibility
 
