@@ -22,7 +22,7 @@ var slice$ = [].slice;
     return n;
   };
   ldCover = function(opt){
-    var ret, cls, this$ = this;
+    var ret, cls, that, this$ = this;
     opt == null && (opt = {});
     this.opt = import$({
       delay: 300,
@@ -30,6 +30,7 @@ var slice$ = [].slice;
       baseZ: 1000,
       escape: true
     }, opt);
+    this.promises = [];
     this.root = !opt.root
       ? (ret = document.createElement("div"), ret.innerHTML = "<div class=\"base\"></div>", ret)
       : typeof opt.root === 'string'
@@ -38,12 +39,17 @@ var slice$ = [].slice;
     cls = typeof opt.type === 'string'
       ? opt.type.split(' ')
       : opt.type;
+    if (that = this.root.getAttribute('data-lock')) {
+      if (that === 'true') {
+        this.opt.lock = true;
+      }
+    }
     this.inner = this.root.querySelector('.inner');
     this.base = this.root.querySelector('.base');
     this.root.classList.add.apply(this.root.classList, ['ldcv'].concat(cls || []));
     this.root.addEventListener('click', function(e){
       var tgt, action;
-      if (e.target === this$.root) {
+      if (e.target === this$.root && !this$.opt.lock) {
         return this$.toggle(false);
       }
       tgt = parent(e.target, '*[data-ldcv-set]', this$.root);
@@ -57,7 +63,6 @@ var slice$ = [].slice;
     return this;
   };
   ldCover.prototype = import$(Object.create(Object.prototype), {
-    promises: [],
     append: function(it){
       var base;
       base = this.root.childNodes[0];
@@ -99,7 +104,7 @@ var slice$ = [].slice;
         this.root.classList.toggle('active');
       }
       isActive = this.root.classList.contains('active');
-      if (this.opt.escape && isActive) {
+      if (!this.opt.lock && this.opt.escape && isActive) {
         esc = function(e){
           if (e.keyCode === 27) {
             this$.toggle(false);
@@ -117,6 +122,7 @@ var slice$ = [].slice;
           ldCover.zstack.push(z);
         } else {
           if ((idx = ldCover.zstack.indexOf(this.z)) < 0) {
+            this.root.classList.remove('running');
             return;
           }
           this.root.style.zIndex = "";
