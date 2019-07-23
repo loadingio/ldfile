@@ -26,7 +26,7 @@
       promise = if @type == \text => (if @ldcv => @ldcv.get! else from-prompt!).then ~> @encoding = it
       else Promise.resolve!
       promise
-        .then ~> Promise.all(Array.from(files).map (f) -> load-file f, type)
+        .then ~> Promise.all(Array.from(files).map (f) ~> load-file f, @type)
         .then ~> @fire \load, it
     @
 

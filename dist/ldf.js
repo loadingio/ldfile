@@ -62,7 +62,7 @@ var slice$ = [].slice;
         : Promise.resolve();
       return promise.then(function(){
         return Promise.all(Array.from(files).map(function(f){
-          return loadFile(f, type);
+          return loadFile(f, this$.type);
         }));
       }).then(function(it){
         return this$.fire('load', it);
