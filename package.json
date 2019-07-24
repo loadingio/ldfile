@@ -1,6 +1,7 @@
 {
   "author": "Kirby Wu",
   "name": "ldFile",
+  "license": "MIT",
   "description": "File Loader",
   "version": "0.0.1",
   "homepage": "https://github.com/loadingio/ldFile",
