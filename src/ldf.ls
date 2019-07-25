@@ -1,5 +1,5 @@
 (->
-  load-file = (f, t = \dataurl, e) ~> new Promise (res, rej) ~>
+  load-file = (f, t = \binary, e) ~> new Promise (res, rej) ~>
     fr = new FileReader!
     fr.onload = -> res {result: fr.result, file: f}
     if t == \dataurl => fr.readAsDataURL f
@@ -40,7 +40,7 @@
         r = new XMLHttpRequest!
         r.open \GET, u, true
         r.responseType = \blob
-        r.onload = -> load-file(r.response, t) .then(res).catch(rej)
+        r.onload = -> load-file(r.response, t, e) .then(res).catch(rej)
         r.send!
     fromFile: (f, t, e) -> load-file f, t, e
 
