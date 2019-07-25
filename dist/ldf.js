@@ -3,7 +3,7 @@ var slice$ = [].slice;
 (function(){
   var loadFile, ldFile, this$ = this;
   loadFile = function(f, t, e){
-    t == null && (t = 'dataurl');
+    t == null && (t = 'binary');
     return new Promise(function(res, rej){
       var fr;
       fr = new FileReader();
@@ -94,7 +94,7 @@ var slice$ = [].slice;
         r.open('GET', u, true);
         r.responseType = 'blob';
         r.onload = function(){
-          return loadFile(r.response, t).then(res)['catch'](rej);
+          return loadFile(r.response, t, e).then(res)['catch'](rej);
         };
         return r.send();
       });
