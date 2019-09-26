@@ -17,13 +17,15 @@
       root: root = if typeof(opt.root) == \string => document.querySelector(opt.root) else opt.root
       type: opt.type or \binary # valid type: <[dataurl text binary arraybuffer blob bloburl]>
       ldcv: opt.ldcv or null
+      encoding: opt.force-encoding
 
-    from-prompt = -> new Promise (res, rej) -> res ret = prompt!
+    from-prompt = -> new Promise (res, rej) -> res ret = prompt("encoding:", "utf-8")
 
     @root.addEventListener \change, (e) ~>
       files = e.target.files
       if !files.length => return
-      promise = if @type == \text => (if @ldcv => @ldcv.get! else from-prompt!).then ~> @encoding = it
+      promise = if @type == \text and !opt.force-encoding =>
+        (if @ldcv => @ldcv.get! else from-prompt!).then ~> @encoding = it
       else Promise.resolve!
       promise
         .then ~> Promise.all(Array.from(files).map (f) ~> load-file f, @type, @encoding)

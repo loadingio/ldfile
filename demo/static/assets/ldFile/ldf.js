@@ -40,12 +40,13 @@ var slice$ = [].slice;
         ? document.querySelector(opt.root)
         : opt.root,
       type: opt.type || 'binary',
-      ldcv: opt.ldcv || null
+      ldcv: opt.ldcv || null,
+      encoding: opt.forceEncoding
     });
     fromPrompt = function(){
       return new Promise(function(res, rej){
         var ret;
-        return res(ret = prompt());
+        return res(ret = prompt("encoding:", "utf-8"));
       });
     };
     this.root.addEventListener('change', function(e){
@@ -54,7 +55,7 @@ var slice$ = [].slice;
       if (!files.length) {
         return;
       }
-      promise = this$.type === 'text'
+      promise = this$.type === 'text' && !opt.forceEncoding
         ? (this$.ldcv
           ? this$.ldcv.get()
           : fromPrompt()).then(function(it){
