@@ -24,7 +24,7 @@ file loader helper in vanilla JS.
 
 ## Method
  * on - add event listener. Currently only one event fired:
-   * change - fired when input value changed. provide a list of file information as param, with following format for each object:
+   * load - fired when input value changed. provide a list of file information as param, with following format for each object:
      - file: the file object provided by browser.
      - result: file content parsed by ldFile.
 
