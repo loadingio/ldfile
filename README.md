@@ -5,7 +5,7 @@ file loader helper in vanilla JS.
 ## Usage
 
     var ldf = new ldFile(config);
-    ldf.on("change", function(ret) {
+    ldf.on("load", function(ret) {
       for(i=0;i<ret.length;i++) {
         console.log(
           ret[i].result,    # file content
