@@ -44,12 +44,12 @@
 .ldcv > .base > .inner {
   width: 100%;
   height: 100%;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  overflow: hidden;
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.3);
   background: #fff;
   padding: 0;
+  transform: translateZ(0);
   transform-origin: 50% 50%;
   transition: all 0.2s ease-in-out;
 }
@@ -110,7 +110,8 @@
 }
 .ldcv.scroll {
   background: rgba(0,0,0,0.5);
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
   padding-top: 50px;
   padding-bottom: 50px;
 }
@@ -120,19 +121,35 @@
 .ldcv.scroll > .base {
   max-height: initial;
 }
+/* if we want by default scrolling, we can add this class
+.ldcv.noscroll
+  background: initial
+  overflow: auto
+  padding: auto
+  &:before
+    display: block
+  & > .base
+    max-height: 90%
+*/
+.ldcv.light:before {
+  background: rgba(255,255,255,0.8);
+}
+.ldcv.scroll.light {
+  background: rgba(255,255,255,0.8);
+}
 /*
 .ldcv > .base > .inner
   transform: scaleX(0.9) translateY(-40px)
 .ldcv.active > .base. > .inner
   transform: scaleX(1.0) translateY(0)
 */
-.ldcv > .base > .inner {
-  transform: scaleX(0.9) rotateX(15deg);
-  transition: all 0.3s ease-in-out;
-}
-.ldcv.active > .base > .inner {
-  transform: scaleX(1) rotateX(0deg);
-}
+/*
+.ldcv > .base > .inner
+  transform: scaleX(0.9) rotateX(15deg)
+  transition: all 0.3s ease-in-out
+.ldcv.active > .base > .inner
+  transform: scaleX(1.0) rotateX(0deg)
+*/
 .ldcv.lg > .base {
   width: 960px;
   height: 700px;

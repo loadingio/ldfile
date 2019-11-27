@@ -22,14 +22,16 @@ var slice$ = [].slice;
     return n;
   };
   ldCover = function(opt){
-    var ret, cls, this$ = this;
+    var ret, cls, that, clicksrc, this$ = this;
     opt == null && (opt = {});
     this.opt = import$({
       delay: 300,
       autoZ: true,
-      baseZ: 1000,
-      escape: true
+      baseZ: 3000,
+      escape: true,
+      byDisplay: true
     }, opt);
+    this.promises = [];
     this.root = !opt.root
       ? (ret = document.createElement("div"), ret.innerHTML = "<div class=\"base\"></div>", ret)
       : typeof opt.root === 'string'
@@ -38,12 +40,24 @@ var slice$ = [].slice;
     cls = typeof opt.type === 'string'
       ? opt.type.split(' ')
       : opt.type;
+    if (that = this.root.getAttribute('data-lock')) {
+      if (that === 'true') {
+        this.opt.lock = true;
+      }
+    }
     this.inner = this.root.querySelector('.inner');
     this.base = this.root.querySelector('.base');
     this.root.classList.add.apply(this.root.classList, ['ldcv'].concat(cls || []));
+    if (this.opt.byDisplay) {
+      this.root.style.display = 'none';
+    }
+    clicksrc = null;
+    this.root.addEventListener('mousedown', function(e){
+      return clicksrc = e.target;
+    });
     this.root.addEventListener('click', function(e){
       var tgt, action;
-      if (e.target === this$.root && !this$.opt.lock) {
+      if (clicksrc === this$.root && !this$.opt.lock) {
         return this$.toggle(false);
       }
       tgt = parent(e.target, '*[data-ldcv-set]', this$.root);
@@ -57,7 +71,6 @@ var slice$ = [].slice;
     return this;
   };
   ldCover.prototype = import$(Object.create(Object.prototype), {
-    promises: [],
     append: function(it){
       var base;
       base = this.root.childNodes[0];
@@ -88,55 +101,69 @@ var slice$ = [].slice;
       return this.root.classList.contains('active');
     },
     toggle: function(v){
-      var isActive, esc, z, ref$, idx, this$ = this;
-      if (!(v != null) && this.root.classList.contains('running')) {
-        return;
-      }
-      this.root.classList.add('running');
-      if (v != null) {
-        this.root.classList[v ? 'add' : 'remove']('active');
-      } else {
-        this.root.classList.toggle('active');
-      }
-      isActive = this.root.classList.contains('active');
-      if (!this.opt.lock && this.opt.escape && isActive) {
-        esc = function(e){
-          if (e.keyCode === 27) {
-            this$.toggle(false);
-            return document.removeEventListener('keyup', esc);
-          }
-        };
-        document.addEventListener('keyup', esc);
-      }
-      if (this.opt.animation && this.inner) {
-        this.inner.classList[isActive ? 'add' : 'remove'].apply(this.inner.classList, this.opt.animation.split(' '));
-      }
-      if (this.opt.autoZ) {
-        if (isActive) {
-          this.root.style.zIndex = this.z = z = ((ref$ = ldCover.zstack)[ref$.length - 1] || 0) + this.opt.baseZ;
-          ldCover.zstack.push(z);
-        } else {
-          if ((idx = ldCover.zstack.indexOf(this.z)) < 0) {
-            this.root.classList.remove('running');
-            return;
-          }
-          this.root.style.zIndex = "";
-          ldCover.zstack.splice(idx, 1);
+      var this$ = this;
+      return new Promise(function(res, rej){
+        if (!(v != null) && this$.root.classList.contains('running')) {
+          return res();
         }
-      }
-      if (this.opt.transformFix && !isActive) {
-        this.root.classList.remove('shown');
-      }
-      setTimeout(function(){
-        this$.root.classList.remove('running');
-        if (this$.opt.transformFix && isActive) {
-          return this$.root.classList.add('shown');
+        this$.root.classList.add('running');
+        if (this$.opt.byDisplay) {
+          this$.root.style.display = 'block';
         }
-      }, this.opt.delay);
-      if (this.promises.length && !isActive) {
-        this.set(undefined, false);
-      }
-      return this.fire("toggle." + (isActive ? 'on' : 'off'));
+        return setTimeout(function(){
+          var isActive, esc, z, ref$, idx, r;
+          if (v != null) {
+            this$.root.classList[v ? 'add' : 'remove']('active');
+          } else {
+            this$.root.classList.toggle('active');
+          }
+          isActive = this$.root.classList.contains('active');
+          if (!this$.opt.lock && this$.opt.escape && isActive) {
+            esc = function(e){
+              if (e.keyCode === 27) {
+                this$.toggle(false);
+                return document.removeEventListener('keyup', esc);
+              }
+            };
+            document.addEventListener('keyup', esc);
+          }
+          if (this$.opt.animation && this$.inner) {
+            this$.inner.classList[isActive ? 'add' : 'remove'].apply(this$.inner.classList, this$.opt.animation.split(' '));
+          }
+          if (this$.opt.autoZ) {
+            if (isActive) {
+              this$.root.style.zIndex = this$.z = z = ((ref$ = ldCover.zstack)[ref$.length - 1] || this$.opt.baseZ) + 1;
+              ldCover.zstack.push(z);
+            } else {
+              idx = ldCover.zstack.indexOf(this$.z);
+              delete this$.z;
+              if (idx < 0) {
+                this$.root.classList.remove('running');
+                return res();
+              }
+              this$.root.style.zIndex = "";
+              r = ldCover.zstack.splice(idx, 1);
+            }
+          }
+          if (this$.opt.transformFix && !isActive) {
+            this$.root.classList.remove('shown');
+          }
+          setTimeout(function(){
+            this$.root.classList.remove('running');
+            if (this$.opt.transformFix && isActive) {
+              this$.root.classList.add('shown');
+            }
+            if (!isActive && this$.opt.byDisplay) {
+              return this$.root.style.display = 'none';
+            }
+          }, this$.opt.delay);
+          if (this$.promises.length && !isActive) {
+            this$.set(undefined, false);
+          }
+          this$.fire("toggle." + (isActive ? 'on' : 'off'));
+          return res();
+        }, 50);
+      });
     },
     on: function(n, cb){
       var ref$;
