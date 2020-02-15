@@ -6,8 +6,9 @@
     else if t == \text => fr.readAsText f, (e or \utf-8)
     else if t == \binary => fr.readAsBinaryString f
     else if t == \arraybuffer or t == \blob => fr.readAsArrayBuffer f
-    else if t == \blob => res f
-    else if t == \bloburl => res URL.createObjectURL f
+    # should we simply use this for blob type?
+    # else if t == \blob => res {file: f}
+    else if t == \bloburl => res {result: URL.createObjectURL(f), file: f}
     else rej new Error("ldFile: un-supported type")
 
   ldFile = (opt = {}) ->

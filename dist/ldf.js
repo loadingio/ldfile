@@ -21,10 +21,11 @@ var slice$ = [].slice;
         return fr.readAsBinaryString(f);
       } else if (t === 'arraybuffer' || t === 'blob') {
         return fr.readAsArrayBuffer(f);
-      } else if (t === 'blob') {
-        return res(f);
       } else if (t === 'bloburl') {
-        return res(URL.createObjectURL(f));
+        return res({
+          result: URL.createObjectURL(f),
+          file: f
+        });
       } else {
         return rej(new Error("ldFile: un-supported type"));
       }
