@@ -46,6 +46,15 @@
         r.onload = -> load-file(r.response, t, e) .then(res).catch(rej)
         r.send!
     fromFile: (f, t, e) -> load-file f, t, e
+    download: (opt={}) ->
+      if opt.href => href = that
+      else href = URL.createObjectURL(if opt.blob => that else new Blob([opt.data], {type: opt.mime}))
+      n = document.createElement \a
+      n.setAttribute \href, href
+      n.setAttribute \download, opt.name or 'untitled'
+      document.body.appendChild n
+      n.click!
+      document.body.removeChild n
 
   if module? => module.exports = ldFile
   if window => window.ldFile = ldFile

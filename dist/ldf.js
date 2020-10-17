@@ -103,6 +103,25 @@ var slice$ = [].slice;
     },
     fromFile: function(f, t, e){
       return loadFile(f, t, e);
+    },
+    download: function(opt){
+      var that, href, n;
+      opt == null && (opt = {});
+      if (that = opt.href) {
+        href = that;
+      } else {
+        href = URL.createObjectURL((that = opt.blob)
+          ? that
+          : new Blob([opt.data], {
+            type: opt.mime
+          }));
+      }
+      n = document.createElement('a');
+      n.setAttribute('href', href);
+      n.setAttribute('download', opt.name) || 'untitled';
+      document.body.appendChild(n);
+      n.click();
+      return document.body.removeChild(n);
     }
   });
   if (typeof module != 'undefined' && module !== null) {
