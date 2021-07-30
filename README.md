@@ -5,6 +5,18 @@ file loader helper in vanilla JS.
 
 ## Usage
 
+install vis npm:
+
+    npm install --save ldfile
+
+
+include required js file:
+
+    <script src="path-to-ldfile/index.js"></script>
+
+
+then:
+
     var ldf = new ldfile(config);
     ldf.on("load", function(ret) {
       for(i=0;i<ret.length;i++) {
