@@ -1,13 +1,13 @@
 {
   "author": "Kirby Wu",
-  "name": "ldFile",
+  "name": "ldfile",
   "license": "MIT",
   "description": "File Loader",
   "version": "0.0.1",
-  "homepage": "https://github.com/loadingio/ldFile",
+  "homepage": "https://github.com/loadingio/ldfile",
   "repository": {
     "type": "git",
-    "url": "https://github.com/loadingio/ldFile"
+    "url": "https://github.com/loadingio/ldfile"
   },
   "engines": {
     "node": ">=0.12.6",
