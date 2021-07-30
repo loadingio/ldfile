@@ -5,6 +5,9 @@
   "description": "File Loader",
   "version": "0.0.1",
   "homepage": "https://github.com/loadingio/ldfile",
+  "files": [
+    "dist/**/*"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/loadingio/ldfile"
