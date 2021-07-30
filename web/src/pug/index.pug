@@ -1,0 +1,22 @@
+doctype html
+html
+  include @/bootstrap.ldui/dist/index.pug
+  head
+    +css("assets/lib/bootstrap/main/css/bootstrap.min.css")
+    +css("assets/lib/bootstrap.ldui/main/bootstrap.ldui.min.css")
+    +css("assets/lib/ldcover/main/ldcv.min.css")
+  body
+    .m-4
+      input.mb-4(type="file")
+      .ldcv: .base: .inner.card: .card-body
+        .btn.btn-outline-dark.m-2(data-ldcv-set="utf-8") UTF-8
+        .btn.btn-outline-dark.m-2(data-ldcv-set="big5") BIG5
+        .btn.btn-outline-dark.m-2(data-ldcv-set="gb2312") GB2312
+      textarea#textarea.form-control(rows="10",placeholder="output")
+
+    +script("assets/lib/bootstrap.native/main/bootstrap-native.min.js")
+    +script("assets/lib/bootstrap.ldui/main/bootstrap.ldui.min.js")
+    +script("assets/lib/@loadingio/ldquery/main/ldq.min.js")
+    +script("assets/lib/ldcover/main/ldcv.min.js")
+    +script("assets/ldfile/dev/index.js")
+    script: include:lsc index.ls
