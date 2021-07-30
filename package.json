@@ -1,9 +1,9 @@
 {
-  "author": "Kirby Wu",
+  "author": "zbryikt",
   "name": "ldfile",
   "license": "MIT",
-  "description": "File Loader",
-  "version": "0.0.1",
+  "description": "file loader helper in vanilla JS",
+  "version": "1.0.0",
   "homepage": "https://github.com/loadingio/ldfile",
   "files": [
     "dist/**/*"
