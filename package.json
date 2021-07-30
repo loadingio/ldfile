@@ -13,16 +13,32 @@
     "url": "https://github.com/loadingio/ldfile"
   },
   "engines": {
-    "node": ">=0.12.6",
-    "npm": ">=1.2.2"
+    "node": ">=10.14.1",
+    "npm": ">=6.4.1"
   },
   "scripts": {
-    "start": "cd demo; ../node_modules/.bin/lsc ../node_modules/template/server.ls"
+    "start": "npx server -r web -o true"
   },
-  "dependencies": {
-    "LiveScript": "^1.3.1",
-    "ldcover": "github:loadingio/ldCover",
-    "template": "github:zbryikt/template#v2",
+  "devDependencies": {
+    "@loadingio/ldquery": "^2.0.0",
+    "bootstrap": "^4.5.3",
+    "bootstrap.ldui": "github:loadingio/bootstrap.ldui",
+    "bootstrap.native": "^3.0.13",
+    "fedep": "^0.0.12",
+    "deploy": "github:zbryikt/deploy",
+    "ldcover": "^1.3.2",
+    "livescript": "^1.6.0",
+    "template": "github:zbryikt/template#v2.3.13",
     "uglify-js": "=3.2.0"
+  },
+  "frontendDependencies": {
+    "root": "web/static/assets/lib",
+    "modules": [
+      "bootstrap",
+      "bootstrap.ldui",
+      "bootstrap.native",
+      "@loadingio/ldquery",
+      "ldcover"
+    ]
   }
 }
