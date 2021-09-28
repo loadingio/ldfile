@@ -6,7 +6,7 @@ load-file = (f, t = \binary, e) ~> new Promise (res, rej) ~>
   else if t == \binary => fr.readAsBinaryString f
   else if t == \arraybuffer or t == \blob => fr.readAsArrayBuffer f
   # should we simply use this for blob type?
-  # else if t == \blob => res {file: f}
+  # else if t == \blob => res {result: f, file: f}
   else if t == \bloburl => res {result: URL.createObjectURL(f), file: f}
   else rej new Error("[ldfile] un-supported type")
 

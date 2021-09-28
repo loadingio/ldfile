@@ -46,8 +46,12 @@ then:
 ## ldfile / Static Methods
 
  * `fromURL(url, type, encoding)` - load file by URL. return promise resolving to {result, file} object.
-   - `type`: the same as the type in ldfile object configuration.
-   - `encoding`: default utf-8 and only applicable when type is text.
+   - params:
+     - `type`: the same as the type in ldfile object configuration.
+     - `encoding`: default utf-8 and only applicable when type is text.
+   - returns:
+     - `result`: parsed content based on given `type`.
+     - `file`: corresponding file object
  * `fromFile(file, type, encoding)` - load File object
    - same with `fromURL` except that the first param (file) is a File object.
 
