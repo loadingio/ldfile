@@ -97,8 +97,19 @@
         r = new XMLHttpRequest();
         r.open('GET', u, true);
         r.responseType = 'blob';
-        r.onload = function(){
-          return loadFile(r.response, t, e).then(res)['catch'](rej);
+        r.onreadystatechange = function(e){
+          if (r.readyState !== 4) {
+            return;
+          }
+          if (r.status === 200) {
+            return loadFile(r.response, t, e).then(res)['catch'](rej);
+          } else {
+            return rej({
+              id: r.status,
+              message: r.statusText,
+              name: 'lderror'
+            });
+          }
         };
         return r.send();
       });

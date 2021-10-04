@@ -42,7 +42,10 @@ ldfile <<< do
       r = new XMLHttpRequest!
       r.open \GET, u, true
       r.responseType = \blob
-      r.onload = -> load-file(r.response, t, e) .then(res).catch(rej)
+      r.onreadystatechange = (e) ->
+        if r.readyState != 4 => return
+        if r.status == 200 => return load-file(r.response, t, e) .then(res).catch(rej)
+        else return rej {id: r.status, message: r.status-text, name: \lderror}
       r.send!
   fromFile: (f, t, e) -> load-file f, t, e
   download: (opt={}) ->
