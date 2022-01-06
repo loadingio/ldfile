@@ -32,7 +32,7 @@ then:
 
  * `root`: HTMLElement or CSS Selector for the input element.
  * `type`: one of <[dataurl text binary arraybuffer blob bloburl]>. default binary.
- * `ldcv`: ldCover for choosing encoding for text type. fallback to browser prompt if omitted.
+ * `ldcv`: ldcover for choosing encoding for text type. fallback to browser prompt if omitted.
 
 
 ## API
