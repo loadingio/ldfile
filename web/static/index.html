@@ -1,14 +1,1 @@
-<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="assets/lib/bootstrap/main/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="assets/lib/bootstrap.ldui/main/bootstrap.ldui.min.css"><link rel="stylesheet" type="text/css" href="assets/lib/ldcover/main/ldcv.min.css"></head><body><div class="m-4"><input class="mb-4" type="file"><div class="ldcv"><div class="base"><div class="inner card"><div class="card-body"><div class="btn btn-outline-dark m-2" data-ldcv-set="utf-8">UTF-8</div><div class="btn btn-outline-dark m-2" data-ldcv-set="big5">BIG5</div><div class="btn btn-outline-dark m-2" data-ldcv-set="gb2312">GB2312</div></div></div></div></div><textarea class="form-control" id="textarea" rows="10" placeholder="output"></textarea></div><script type="text/javascript" src="assets/lib/bootstrap.native/main/bootstrap-native.min.js"></script><script type="text/javascript" src="assets/lib/bootstrap.ldui/main/bootstrap.ldui.min.js"></script><script type="text/javascript" src="assets/lib/@loadingio/ldquery/main/ldq.min.js"></script><script type="text/javascript" src="assets/lib/ldcover/main/ldcv.min.js"></script><script type="text/javascript" src="assets/ldfile/dev/index.js"></script><script>var ldcv, ldf;
-ldcv = new ldcover({
-  root: '.ldcv'
-});
-ldf = new ldfile({
-  root: 'input',
-  type: 'text',
-  ldcv: ldcv
-});
-ldf.on('load', function(it){
-  return textarea.value = it.map(function(it){
-    return it.result;
-  }).join('\n');
-});</script></body></html>
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="assets/lib/bootstrap/main/dist/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="assets/lib/@loadingio/bootstrap.ext/main/index.min.css"><link rel="stylesheet" type="text/css" href="assets/lib/ldcover/main/index.min.css"></head><body><div class="m-4"><input class="mb-4" type="file"><div class="ldcv"><div class="base"><div class="inner card"><div class="card-body"><div class="btn btn-outline-dark m-2" data-ldcv-set="utf-8">UTF-8</div><div class="btn btn-outline-dark m-2" data-ldcv-set="big5">BIG5</div><div class="btn btn-outline-dark m-2" data-ldcv-set="gb2312">GB2312</div></div></div></div></div><textarea class="form-control" id="textarea" rows="10" placeholder="output"></textarea></div><script type="text/javascript" src="assets/lib/bootstrap.native/main/dist/bootstrap-native.min.js" defer></script><script type="text/javascript" src="assets/lib/@loadingio/ldquery/main/index.min.js" defer></script><script type="text/javascript" src="assets/lib/ldcover/main/index.min.js" defer></script><script type="text/javascript" src="assets/ldfile/dev/index.js" defer></script><script type="module">var ldcv,ldf;ldcv=new ldcover({root:".ldcv"});ldf=new ldfile({root:"input",type:"text",ldcv:ldcv});ldf.on("load",function(l){return textarea.value=l.map(function(l){return l.result}).join("\n")});</script></body></html>

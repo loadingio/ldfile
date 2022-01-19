@@ -4,7 +4,7 @@ mkdir -p dist
 echo "build src/index.ls -> dist/index.js ..."
 ./node_modules/.bin/lsc -cp --no-header src/index.ls > dist/index.js
 echo "minifying index.js ..."
-./node_modules/.bin/uglifyjs dist/index.js > dist/index.min.js
+./node_modules/.bin/uglifyjs dist/index.js -m -c > dist/index.min.js
 echo "deploy to web folder..."
 rm -rf web/static/assets/ldfile/dev/
 mkdir -p web/static/assets/ldfile/dev/

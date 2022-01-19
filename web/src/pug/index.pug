@@ -1,10 +1,10 @@
 doctype html
 html
-  include @/bootstrap.ldui/dist/index.pug
+  include @/@loadingio/bootstrap.ext/index.pug
   head
-    +css("assets/lib/bootstrap/main/css/bootstrap.min.css")
-    +css("assets/lib/bootstrap.ldui/main/bootstrap.ldui.min.css")
-    +css("assets/lib/ldcover/main/ldcv.min.css")
+    +css("assets/lib/bootstrap/main/dist/css/bootstrap.min.css")
+    +css("assets/lib/@loadingio/bootstrap.ext/main/index.min.css")
+    +css("assets/lib/ldcover/main/index.min.css")
   body
     .m-4
       input.mb-4(type="file")
@@ -14,9 +14,8 @@ html
         .btn.btn-outline-dark.m-2(data-ldcv-set="gb2312") GB2312
       textarea#textarea.form-control(rows="10",placeholder="output")
 
-    +script("assets/lib/bootstrap.native/main/bootstrap-native.min.js")
-    +script("assets/lib/bootstrap.ldui/main/bootstrap.ldui.min.js")
-    +script("assets/lib/@loadingio/ldquery/main/ldq.min.js")
-    +script("assets/lib/ldcover/main/ldcv.min.js")
+    +script("assets/lib/bootstrap.native/main/dist/bootstrap-native.min.js")
+    +script("assets/lib/@loadingio/ldquery/main/index.min.js")
+    +script("assets/lib/ldcover/main/index.min.js")
     +script("assets/ldfile/dev/index.js")
-    script: include:lsc index.ls
+    script(type="module"): include:lsc index.ls

@@ -1,3 +1,5 @@
 node_modules
 demo/_public
 .*.swp
+web/.view/
+web/static/assets/lib/
