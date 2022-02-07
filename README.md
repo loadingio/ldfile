@@ -54,6 +54,11 @@ then:
      - `file`: corresponding file object
  * `fromFile(file, type, encoding)` - load File object
    - same with `fromURL` except that the first param (file) is a File object.
+ * `download(opt)` - download file based on `opt`, which contains:
+   - `href`: url for the file to download. either `href` or `blob` should be given.
+   - `blob`: file to download. ignored if `href` is provided
+   - `mime`: file format. ( e.g., "application/pdf" )
+   - `name`: saved filename 
 
 
 ## Compatibility
