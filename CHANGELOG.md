@@ -1,5 +1,10 @@
 # Change Logs
 
+## v2.0.1
+
+ - upgrade dependencies to fix vulnerabilities
+
+
 ## v2.0.0
 
  - upgrade modules

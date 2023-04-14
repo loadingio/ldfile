@@ -3,7 +3,7 @@
   "name": "ldfile",
   "license": "MIT",
   "description": "file loader helper in vanilla JS",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "browser": "dist/index.min.js",
   "main": "dist/index.min.js",
   "homepage": "https://github.com/loadingio/ldfile",
@@ -23,15 +23,15 @@
     "start": "npx server -r web -o true"
   },
   "devDependencies": {
-    "@loadingio/ldquery": "^3.0.1",
+    "@loadingio/ldquery": "^3.0.4",
     "bootstrap": "^4.5.3",
-    "@loadingio/bootstrap.ext": "^0.0.4",
+    "@loadingio/bootstrap.ext": "^0.0.9",
     "bootstrap.native": "^3.0.13",
-    "fedep": "^1.1.0",
-    "@zbryikt/deploy": "^0.0.1",
-    "ldcover": "^3.0.1",
+    "fedep": "^1.1.11",
+    "@zbryikt/deploy": "^0.0.4",
+    "ldcover": "^3.5.1",
     "livescript": "^1.6.0",
-    "@zbryikt/template": "^2.3.33",
+    "@zbryikt/template": "^2.3.45",
     "uglify-js": "^3.13.1"
   },
   "frontendDependencies": {
