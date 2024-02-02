@@ -49,7 +49,7 @@ then:
    - params:
      - `type`: the same as the type in ldfile object configuration.
      - `encoding`: default utf-8 and only applicable when type is text.
-   - returns:
+   - returns a Promise resolving with an object with following fields:
      - `result`: parsed content based on given `type`.
      - `file`: corresponding file object
  * `fromFile(file, type, encoding)` - load File object
