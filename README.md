@@ -52,6 +52,7 @@ then:
    - returns a Promise resolving with an object with following fields:
      - `result`: parsed content based on given `type`.
      - `file`: corresponding file object
+   - this function can be used to load file from Data URLs.
  * `fromFile(file, type, encoding)` - load File object
    - same with `fromURL` except that the first param (file) is a File object.
  * `download(opt)` - download file based on `opt`, which contains:
